@@ -33,8 +33,9 @@ CREATE TABLE book(
 	book_cd VARCHAR(20) PRIMARY KEY NOT NULL COMMENT '도서 번호', 
     book_name VARCHAR(20) NOT NULL COMMENT '도서명',			
     book_author VARCHAR(20) NOT NULL COMMENT '저자',
-    book_publisherVARCHAR(20) NOT NULL COMMENT '출판사', 	
-    -- book_num int not null);					
+    book_publisher VARCHAR(20) NOT NULL COMMENT '출판사'
+	) COMMENT '도서';
+  				
 
 
 -- 도서 속성 추가 
@@ -78,21 +79,23 @@ CREATE TABLE book_reservation (
 		id VARCHAR(20) PRIMARY KEY COMMENT '유저 아이디',
         book_cd VARCHAR(20) NOT NULL COMMENT '도서 번호',
     	book_name VARCHAR(20) NOT NULL COMMENT '도서 제목',
-    	reserve_date DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '예약 날짜',
+    	reserve_date DATETIME NOT NULL COMMENT '예약 날짜',
 		FOREIGN KEY(id) REFERENCES 
 			User(id) ON DELETE CASCADE,
 		FOREIGN KEY(book_cd) REFERENCES 
 			Book(book_cd) ON DELETE CASCADE
         ) COMMENT '도서 반납';
 
-DROP TABLE Book_Reservation;        
-DROP TABLE book_Borrow;
-	SELECT * FROM Book_Reservation;
+-- DROP TABLE Book_Reservation;        
+-- DROP TABLE book_Borrow;
+-- 	SELECT * FROM Book_Reservation;
 
-INSERT INTO book_borrow(id, book_cd, book_name) 
-		VALUE('a1', 1, '우리는 사랑 안에 살고 있다');   
+-- INSERT INTO book_borrow 
+-- 		VALUE('a1', 1, '우리는 사랑 안에 살고 있다', );   
 
-SELECT uer.id, uer.pw, uer.name, uer.address, res.book_cd, res.reserve_date
-FROM user uer INNER JOIN Book_Reservation res
-				ON uer.id = res.id;
+-- SELECT uer.id, uer.pw, uer.name, uer.address, res.book_cd, res.reserve_date
+-- FROM user uer INNER JOIN Book_Reservation res
+-- 				ON uer.id = res.id;
+
+                
 	
