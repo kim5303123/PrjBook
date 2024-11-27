@@ -1,4 +1,4 @@
-package prj.book;
+package prj.com.book.vo;
 
 /**
  * @Author : TeamPrjBook
@@ -13,6 +13,65 @@ public class BookVo {
 	 * @Date : 2024. 11. 27.
 	 */
 
+	private int num;
+	private String title, company, name;
+	private int cost;
+	
+	public BookVo() {}
+
+	public BookVo(int num, String title, String company, String name, int cost) {
+		super();
+		this.num = num;
+		this.title = title;
+		this.company = company;
+		this.name = name;
+		this.cost = cost;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+	
+	
+	/*	우리 vo 
+	
+	
 //	도서번호
 	String book_cd;
 //	도서이름
@@ -22,8 +81,19 @@ public class BookVo {
 //	출판사
 	String book_publisher;
 
-	
+//	기본생성자
+	public BookVo() {
+	}
+
 //	생성자
+	public BookVo(String book_name, String book_author, String book_publisher) {
+		super();
+		this.book_name = book_name;
+		this.book_author = book_author;
+		this.book_publisher = book_publisher;
+	}
+
+//	매개변수 생성자
 	public BookVo(String book_cd, String book_name, String book_author, String book_publisher) {
 		super();
 		this.book_cd = book_cd;
@@ -72,4 +142,7 @@ public class BookVo {
 				+ ", book_publisher=" + book_publisher + "]";
 	}
 
+	*/
+	
+	
 }
