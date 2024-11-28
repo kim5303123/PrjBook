@@ -56,7 +56,7 @@ public class BookDao {
 				} else {
 					System.out.println(bookCd + "번 도서 정보가 등록 실패하였습니다.");
 				}
-			}
+			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("bookInsertInput() Exception!!!");
