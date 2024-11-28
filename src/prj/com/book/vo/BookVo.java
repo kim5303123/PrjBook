@@ -12,7 +12,7 @@ package prj.com.book.vo;
 //	 * @Author : TeamPrjBook
 //	 * @Date : 2024. 11. 27. 
 //	 */
-//
+// 
 //	private int num;
 //	private String title, company, name;
 //	private int cost;
