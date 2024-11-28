@@ -20,11 +20,11 @@ private PreparedStatement ps;
 private ResultSet rs;
 
 // 도서 번호 조회
-public ResultSet checkNum(int num) {
-	String sql = "SELECT * FROM tblBook WHERE num = ?";
+public ResultSet checkNum(String book_cd) {
+	String sql = "SELECT * FROM book WHERE book_cd = ?";
 	try {
 		ps = conn.prepareStatement(sql);
-		ps.setInt(1, num);
+		ps.setString(1, book_cd);
 		rs = ps.executeQuery();
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -36,14 +36,13 @@ public ResultSet checkNum(int num) {
 // 도서 정보 등록
 public int insertBook(BookVo dto) {
 	int succ = 0;
-	String sql = "INSERT INTO tblBook VALUES(?, ?, ?, ?, ?)";
+	String sql = "INSERT INTO book VALUES(?, ?, ?, ?)";
 	try {
 		ps = conn.prepareStatement(sql);
-		ps.setInt(1, dto.getNum());
-		ps.setString(2, dto.getTitle());
-		ps.setString(3, dto.getCompany());
-		ps.setString(4, dto.getName());
-		ps.setInt(5, dto.getCost());
+		ps.setString(1, dto.getBook_cd());
+		ps.setString(2, dto.getBook_name());
+		ps.setString(3, dto.getBook_publisher());
+		ps.setString(4, dto.getBook_author());
 		succ = ps.executeUpdate();
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -53,18 +52,17 @@ public int insertBook(BookVo dto) {
 } // insertBook()
 
 public ArrayList<BookVo> selectBookAll(ArrayList<BookVo> list) {
-	String sql = "SELECT * FROM tblBook ORDER BY num ASC";
+	String sql = "SELECT * FROM book ORDER BY book_cd ASC";
 	try {
 		ps = conn.prepareStatement(sql);
 		rs = ps.executeQuery();
 		while(rs.next()) {
-			int num = rs.getInt("num");
-			String title = rs.getString("title");
-			String company = rs.getString("company");
-			String name = rs.getString("name");
-			int cost = rs.getInt("cost");
+			String book_cd = rs.getString("book_cd");
+			String book_name = rs.getString("book_name");
+			String book_publisher = rs.getString("book_publisher");
+			String book_author = rs.getString("book_author");
 			
-			BookVo dto = new BookVo(num, title, company, name, cost);
+			BookVo dto = new BookVo(book_cd, book_name, book_publisher, book_author);
 			list.add(dto);
 		}
 	} catch (Exception e) {
@@ -80,30 +78,27 @@ public void display(ArrayList<BookVo> list) {
 		System.out.println("검색된 결과가 없습니다.");
 	} else {
 		for (BookVo dto : list) {
-			System.out.print(dto.getNum() + "\t");
-			System.out.print(dto.getTitle() + "\t");
-			System.out.print(dto.getCompany() + "\t");
-			System.out.print(dto.getName() + "\t");
-			System.out.print(dto.getCost() + "\n");
+			System.out.print(dto.getBook_cd() + "\t");
+			System.out.print(dto.getBook_name() + "\t");
+			System.out.print(dto.getBook_publisher() + "\t");
+			System.out.print(dto.getBook_author() + "\n");
 		}
 	}
 } // display()
 
 // 제목 검색 메서드
 public void selectBookTitle(ArrayList<BookVo> list, String searchTitle) {
-	String sql = "SELECT * FROM tblBook WHERE UPPER(title) LIKE UPPER(?)";
+	String sql = "SELECT * FROM book WHERE UPPER(book_name) LIKE UPPER(?)";
 	try {
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, "%" + searchTitle + "%");
 		rs = ps.executeQuery();
 		while(rs.next()) {
-			int num = rs.getInt("num");
-			String title = rs.getString("title");
-			String company = rs.getString("company");
-			String name = rs.getString("name");
-			int cost = rs.getInt("cost");
-			
-			BookVo dto = new BookVo(num, title, company, name, cost);
+			String book_cd = rs.getString("book_cd");
+			String book_name = rs.getString("book_name");
+			String book_publisher = rs.getString("book_publisher");
+			String book_author = rs.getString("book_author");
+			BookVo dto = new BookVo(book_cd, book_name, book_publisher, book_author);
 			list.add(dto);
 		}
 	} catch (Exception e) {
@@ -113,12 +108,12 @@ public void selectBookTitle(ArrayList<BookVo> list, String searchTitle) {
 } // selectBookTitle()
 
 // 도서 정보 삭제 메서드
-public int deleteBook(int num) {
+public int deleteBook(String book_cd) {
 	int succ = 0;
-	String sql = "DELETE FROM tblBook WHERE num = ?";
+	String sql = "DELETE FROM book WHERE book_cd = ?";
 	try {
 		ps = conn.prepareStatement(sql);
-		ps.setInt(1, num);
+		ps.setString(1, book_cd);
 		succ = ps.executeUpdate();
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -131,15 +126,14 @@ public int deleteBook(int num) {
 // 도서 정보 수정 메서드
 public int updateBook(BookVo dto) {
 	int succ = 0;
-	String sql = "UPDATE tblBook SET title = ?, company = ?, ";
-	sql += "name = ?, cost = ? WHERE num = ?";
+	String sql = "UPDATE book SET book_name = ?, book_publisher = ?, ";
+	sql += "book_author = ?, cost = ? WHERE book_cd = ?";
 	try {
 		ps = conn.prepareStatement(sql);
-		ps.setString(1, dto.getTitle());
-		ps.setString(2, dto.getCompany());
-		ps.setString(3, dto.getName());
-		ps.setInt(4, dto.getCost());
-		ps.setInt(5, dto.getNum());
+		ps.setString(1, dto.getBook_name());
+		ps.setString(2, dto.getBook_publisher());
+		ps.setString(3, dto.getBook_author());
+		ps.setString(5, dto.getBook_cd());
 		succ = ps.executeUpdate();
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -148,25 +142,34 @@ public int updateBook(BookVo dto) {
 	return succ;
 }
 
+//// 도서 목록 대여 메서드 
+//public int borrowBook(String book_cd) {
+//	int succ = 0;
+//	String sql = "INSERT INTO book_borrow(id, brrow,  "  
+//			+ " SELECT id, book_cd, book_name FROM book " +
+//			" ";
+//	return succ;
+//}
+
 // 도서 주문 메서드
-public void orderBook(ResultSet rs, int cnt) {
-	try {
-		String title = rs.getString("title");
-		int cost = rs.getInt("cost");
-		int price = cnt * cost;
-		
-		DecimalFormat df = new DecimalFormat("￦#,##0");
-		String msg = "\n주문하신 도서 명은 " + title + "이고, ";
-		msg += "단가는 " + df.format(cost) + "원이며, ";
-		msg += "주문 수량은 " + cnt + "권 입니다.";
-		msg += "\n총 주문 금액은 " + df.format(price) + "원입니다.";
-		
-		System.out.println(msg);
-	} catch (Exception e) {
-		e.printStackTrace();
-		System.out.println("orderBook() Exception!!!");
-	}
-} // orderBook()
+//public void orderBook(ResultSet rs, int cnt) {
+//	try {
+//		String title = rs.getString("book_name");
+//		int cost = rs.getInt("cost");
+//		int price = cnt * cost;
+//		
+//		DecimalFormat df = new DecimalFormat("￦#,##0");
+//		String msg = "\n주문하신 도서 명은 " + title + "이고, ";
+//		msg += "단가는 " + df.format(cost) + "원이며, ";
+//		msg += "주문 수량은 " + cnt + "권 입니다.";
+//		msg += "\n총 주문 금액은 " + df.format(price) + "원입니다.";
+//		
+//		System.out.println(msg);
+//	} catch (Exception e) {
+//		e.printStackTrace();
+//		System.out.println("orderBook() Exception!!!");
+//	}
+//} // orderBook()
 
 // DB Close
 public void dbClose() {

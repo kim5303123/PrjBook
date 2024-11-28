@@ -28,7 +28,10 @@ public class BookMainApp {
 		System.out.println("도서 제목 검색 : S");
 		System.out.println("도서 정보 삭제 : D");
 		System.out.println("도서 정보 수정 : U");
-		System.out.println("도서 주문 신청 : O");
+		System.out.println("도서 목록 대여 : B");
+		System.out.println("도서 목록 반납 : R");
+		System.out.println("도서 목록 예약 : BR");
+//		System.out.println("도서 주문 신청 : O");
 		System.out.println("도서 관리 종료 : E");
 		System.out.println("==================\n");
 	}
@@ -52,8 +55,8 @@ public class BookMainApp {
 				input.bookUpdateInput();
 			} else if (menu.equalsIgnoreCase("s")) {
 				input.bookSearchTitleInput();
-			} else if (menu.equalsIgnoreCase("o")) {
-				input.bookOrderInput();
+//			} else if (menu.equalsIgnoreCase("o")) {
+//				input.bookOrderInput();
 			} else if(menu.equalsIgnoreCase("e")) {
 				System.out.print("정말 종료하시겠습니까(Y/N)> ");
 				String isExit = scanner.nextLine();
