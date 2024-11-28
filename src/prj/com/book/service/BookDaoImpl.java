@@ -127,13 +127,13 @@ public int deleteBook(String book_cd) {
 public int updateBook(BookVo dto) {
 	int succ = 0;
 	String sql = "UPDATE book SET book_name = ?, book_publisher = ?, ";
-	sql += "book_author = ?, cost = ? WHERE book_cd = ?";
+	sql += "book_author = ? WHERE book_cd = ?";
 	try {
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, dto.getBook_name());
 		ps.setString(2, dto.getBook_publisher());
 		ps.setString(3, dto.getBook_author());
-		ps.setString(5, dto.getBook_cd());
+		ps.setString(4, dto.getBook_cd());
 		succ = ps.executeUpdate();
 	} catch (Exception e) {
 		e.printStackTrace();

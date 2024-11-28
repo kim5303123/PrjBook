@@ -80,7 +80,7 @@ package prj.com.book.vo;
 //	출판사
 	String book_publisher;
 //	도서대여 
-	String borrow_dete; 
+	String borrow_date; 
 //	도서반납
 	String return_date; 
 //	도서예약 
@@ -140,29 +140,29 @@ package prj.com.book.vo;
 		this.book_publisher = book_publisher;
 	}
 
-	public String getBorrow_dete() {
-		return borrow_dete;
-	}
-
-	public void setBorrow_dete(String borrow_dete) {
-		this.borrow_dete = borrow_dete;
-	}
-
-	public String getReturn_date() {
-		return return_date;
-	}
-
-	public void setReturn_date(String return_date) {
-		this.return_date = return_date;
-	}
-
-	public String getResrve_date() {
-		return resrve_date;
-	}
-
-	public void setResrve_date(String resrve_date) {
-		this.resrve_date = resrve_date;
-	}
+//	public String getBorrow_dete() {
+//		return borrow_date;
+//	}
+//
+//	public void setBorrow_dete(String borrow_dete) {
+//		this.borrow_date = borrow_date;
+//	}
+//
+//	public String getReturn_date() {
+//		return return_date;
+//	}
+//
+//	public void setReturn_date(String return_date) {
+//		this.return_date = return_date;
+//	}
+//
+//	public String getResrve_date() {
+//		return resrve_date;
+//	}
+//
+//	public void setResrve_date(String resrve_date) {
+//		this.resrve_date = resrve_date;
+//	}
 
 	//	toString
 	@Override
