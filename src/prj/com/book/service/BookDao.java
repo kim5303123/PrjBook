@@ -24,7 +24,7 @@ public class BookDao {
 		this.scanner = scanner;
 	}
 
-	// 도서 정보 등록 서브 화면
+	// 도서 정보 등록 서브 화면 
 	public void bookInsertInput() {
  
 		System.out.println("\n도서 정보 등록 화면입니다.");
