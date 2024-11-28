@@ -58,7 +58,7 @@ public class BookDao {
 				}
 			} 
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace();     
 			System.out.println("bookInsertInput() Exception!!!");
 		}
 	} // bookInsertInput()
