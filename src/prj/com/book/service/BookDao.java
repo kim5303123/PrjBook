@@ -24,9 +24,9 @@ public class BookDao {
 		this.scanner = scanner;
 	}
 
-	// 도서 정보 등록 서브 화면
+	// 도서 정보 등록 서브 화면 
 	public void bookInsertInput() {
-
+ 
 		System.out.println("\n도서 정보 등록 화면입니다.");
 		System.out.print("등록할 도서의 번호를 입력하세요> ");
 		String bookCd = scanner.nextLine();
@@ -58,12 +58,15 @@ public class BookDao {
 				}
 			} 
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace();     
 			System.out.println("bookInsertInput() Exception!!!");
 		}
 	} // bookInsertInput()
 
+	
+	// 도서도서
 	// 도서 목록 보기
+	// 도서
 	public void bookSearchAllInput() {
 		System.out.println("\n도서 목록 보기 화면입니다.");
 		ArrayList<BookVo> list = new ArrayList<>();
