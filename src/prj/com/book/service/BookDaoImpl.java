@@ -3,7 +3,6 @@ package prj.com.book.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import prj.com.book.connection.Connections;
@@ -39,10 +38,10 @@ public int insertBook(BookVo dto) {
 	String sql = "INSERT INTO book VALUES(?, ?, ?, ?)";
 	try {
 		ps = conn.prepareStatement(sql);
-		ps.setString(1, dto.getBook_cd());
-		ps.setString(2, dto.getBook_name());
-		ps.setString(3, dto.getBook_publisher());
-		ps.setString(4, dto.getBook_author());
+		ps.setString(1, dto.getBookCd());
+		ps.setString(2, dto.getBookName());
+		ps.setString(3, dto.getBookPublisher());
+		ps.setString(4, dto.getBookAuthor());
 		succ = ps.executeUpdate();
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -78,10 +77,10 @@ public void display(ArrayList<BookVo> list) {
 		System.out.println("검색된 결과가 없습니다.");
 	} else {
 		for (BookVo dto : list) {
-			System.out.print(dto.getBook_cd() + "\t");
-			System.out.print(dto.getBook_name() + "\t");
-			System.out.print(dto.getBook_publisher() + "\t");
-			System.out.print(dto.getBook_author() + "\n");
+			System.out.print(dto.getBookCd() + "\t");
+			System.out.print(dto.getBookName() + "\t");
+			System.out.print(dto.getBookPublisher() + "\t");
+			System.out.print(dto.getBookAuthor() + "\n");
 		}
 	}
 } // display()
@@ -130,10 +129,10 @@ public int updateBook(BookVo dto) {
 	sql += "book_author = ? WHERE book_cd = ?";
 	try {
 		ps = conn.prepareStatement(sql);
-		ps.setString(1, dto.getBook_name());
-		ps.setString(2, dto.getBook_publisher());
-		ps.setString(3, dto.getBook_author());
-		ps.setString(4, dto.getBook_cd());
+		ps.setString(1, dto.getBookName());
+		ps.setString(2, dto.getBookPublisher());
+		ps.setString(3, dto.getBookAuthor());
+		ps.setString(4, dto.getBookCd());
 		succ = ps.executeUpdate();
 	} catch (Exception e) {
 		e.printStackTrace();

@@ -72,106 +72,106 @@ package prj.com.book.vo;
 	
 	public class BookVo {
 //	도서번호
-	String book_cd;
+	String bookCd;;
 //	도서이름
-	String book_name;
+	String bookName;
 //	작가
-	String book_author;
+	String bookAuthor;
 //	출판사
-	String book_publisher;
+	String bookPublisher;
 //	도서대여 
-	String borrow_date; 
+	String borrowDate; 
 //	도서반납
-	String return_date; 
+	String returnDate; 
 //	도서예약 
-	String resrve_date;
+	String resrveDate;
 
 //	기본생성자
 	public BookVo() {
 	}
 
 //	생성자
-	public BookVo(String book_name, String book_author, String book_publisher) {
+	public BookVo(String bookName, String bookAuthor, String bookPublisher) {
 		super();
-		this.book_name = book_name;
-		this.book_author = book_author;
-		this.book_publisher = book_publisher;
+		this.bookName = bookName;
+		this.bookAuthor = bookAuthor;
+		this.bookPublisher = bookPublisher;
 	}
 
 //	매개변수 생성자
-	public BookVo(String book_cd, String book_name, String book_author, String book_publisher) {
+	public BookVo(String bookCd, String bookName, String bookAuthor, String bookPublisher) {
 		super();
-		this.book_cd = book_cd;
-		this.book_name = book_name;
-		this.book_author = book_author;
-		this.book_publisher = book_publisher;
+		this.bookCd = bookCd;
+		this.bookName = bookName;
+		this.bookAuthor = bookAuthor;
+		this.bookPublisher = bookPublisher;
 	}
 
+	
+	
 //	게터 / 세터
-	public String getBook_cd() {
-		return book_cd;
+	public String getBookCd() {
+		return bookCd;
 	}
 
-	public void setBook_cd(String book_cd) {
-		this.book_cd = book_cd;
+	public void setBookCd(String bookCd) {
+		this.bookCd = bookCd;
 	}
 
-	public String getBook_name() {
-		return book_name;
+	public String getBookName() {
+		return bookName;
 	}
 
-	public void setBook_name(String book_name) {
-		this.book_name = book_name;
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
 	}
 
-	public String getBook_author() {
-		return book_author;
+	public String getBookAuthor() {
+		return bookAuthor;
 	}
 
-	public void setBook_author(String book_author) {
-		this.book_author = book_author;
+	public void setBookAuthor(String bookAuthor) {
+		this.bookAuthor = bookAuthor;
 	}
 
-	public String getBook_publisher() {
-		return book_publisher;
+	public String getBookPublisher() {
+		return bookPublisher;
 	}
 
-	public void setBook_publisher(String book_publisher) {
-		this.book_publisher = book_publisher;
+	public void setBookPublisher(String bookPublisher) {
+		this.bookPublisher = bookPublisher;
 	}
 
-//	public String getBorrow_dete() {
-//		return borrow_date;
-//	}
-//
-//	public void setBorrow_dete(String borrow_dete) {
-//		this.borrow_date = borrow_date;
-//	}
-//
-//	public String getReturn_date() {
-//		return return_date;
-//	}
-//
-//	public void setReturn_date(String return_date) {
-//		this.return_date = return_date;
-//	}
-//
-//	public String getResrve_date() {
-//		return resrve_date;
-//	}
-//
-//	public void setResrve_date(String resrve_date) {
-//		this.resrve_date = resrve_date;
-//	}
+	public String getBorrowDate() {
+		return borrowDate;
+	}
+
+	public void setBorrowDate(String borrowDate) {
+		this.borrowDate = borrowDate;
+	}
+
+	public String getReturnDate() {
+		return returnDate;
+	}
+
+	public void setReturnDate(String returnDate) {
+		this.returnDate = returnDate;
+	}
+
+	public String getResrveDate() {
+		return resrveDate;
+	}
+
+	public void setResrveDate(String resrveDate) {
+		this.resrveDate = resrveDate;
+	}
 
 	//	toString
 	@Override
 	public String toString() {
-		return "BookVo [book_cd=" + book_cd + ", book_name=" + book_name + ", book_author=" + book_author
-				+ ", book_publisher=" + book_publisher + "]";
+		return "BookVo [bookCd=" + bookCd + ", bookName=" + bookName + ", bookAuthor=" + bookAuthor + ", bookPublisher="
+				+ bookPublisher + ", borrowDate=" + borrowDate + ", returnDate=" + returnDate + ", resrveDate="
+				+ resrveDate + "]";
 	}
-
-
-	
 	
 }
