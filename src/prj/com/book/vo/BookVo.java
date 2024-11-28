@@ -10,7 +10,7 @@ package prj.com.book.vo;
 //public class BookVo {
 //	/**
 //	 * @Author : TeamPrjBook
-//	 * @Date : 2024. 11. 27.
+//	 * @Date : 2024. 11. 27. 
 //	 */
 //
 //	private int num;
