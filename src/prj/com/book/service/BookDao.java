@@ -63,7 +63,7 @@ public class BookDao {
 		}
 	} // bookInsertInput()
 
-	
+	// 테스트입니다
 	// 도서도서
 	// 도서 목록 보기
 	// 도서
