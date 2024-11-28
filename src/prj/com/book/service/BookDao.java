@@ -26,7 +26,7 @@ public class BookDao {
 
 	// 도서 정보 등록 서브 화면
 	public void bookInsertInput() {
-
+ 
 		System.out.println("\n도서 정보 등록 화면입니다.");
 		System.out.print("등록할 도서의 번호를 입력하세요> ");
 		String bookCd = scanner.nextLine();
