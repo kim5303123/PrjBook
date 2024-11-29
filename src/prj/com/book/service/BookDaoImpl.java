@@ -18,6 +18,21 @@ private Connection conn = Connections.getConn();
 private PreparedStatement ps;
 private ResultSet rs;
 
+// 유저 아이디 조회 
+public ResultSet checkId(String userId) {
+	String sql = "SELECT * FROM user WHERE id = ?";
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, userId);
+		rs = ps.executeQuery();
+	} catch (Exception e) {
+		e.printStackTrace();
+		System.out.println("checkNum() Exception!!!");
+	}
+	return rs;
+}
+
+
 // 도서 번호 조회
 public ResultSet checkNum(String book_cd) {
 	String sql = "SELECT * FROM book WHERE book_cd = ?";
@@ -141,14 +156,44 @@ public int updateBook(BookVo dto) {
 	return succ;
 }
 
-//// 도서 목록 대여 메서드 
-//public int borrowBook(String book_cd) {
-//	int succ = 0;
-//	String sql = "INSERT INTO book_borrow(id, brrow,  "  
-//			+ " SELECT id, book_cd, book_name FROM book " +
-//			" ";
-//	return succ;
-//}
+// 도서 목록 대여 메서드 
+public int borrowBook(BookVo dto) {
+	int succ = 0;
+	String sql = "INSERT INTO book_borrow(id, book_cd, book_name, borrow_date, return_date) " +
+				" SELECT (SELECT id FROM user WHERE id = ?), " +
+				" book_cd, book_name, NOW(), DATE_ADD(NOW(), INTERVAL 2 WEEK) " +
+				" FROM book WHERE book_cd = ?";
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, dto.getUserId());
+		ps.setString(2, dto.getBookCd());
+		succ = ps.executeUpdate();
+	} catch (Exception e) {
+		e.printStackTrace();
+		System.out.println("deleteBook() Exception!!!");
+	}
+	return succ;
+}
+
+//도서 목록 반납 메서드 
+public int returnBook(BookVo dto) {
+	int succ = 0;
+	String sql = "INSERT INTO book_return(id, book_cd, book_name, borrow_date, return_date) " +
+				" SELECT (SELECT id FROM user WHERE id = ?), book_cd ar, book_name, " +
+						" (SELECT borrow_date FROM book_borrow WHERE book_cd = ar), NOW() " +
+				" FROM book WHERE book_cd = ?";
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, dto.getUserId());
+		ps.setString(2, dto.getBookCd());
+		succ = ps.executeUpdate();
+	} catch (Exception e) {
+		e.printStackTrace();
+		System.out.println("deleteBook() Exception!!!");
+	}
+	return succ;
+}
+
 
 // 도서 주문 메서드
 //public void orderBook(ResultSet rs, int cnt) {

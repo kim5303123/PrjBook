@@ -85,6 +85,8 @@ package prj.com.book.vo;
 	String returnDate; 
 //	도서예약 
 	String resrveDate;
+//	유저 아이디 
+	String userId;
 
 //	기본생성자
 	public BookVo() {
@@ -97,7 +99,21 @@ package prj.com.book.vo;
 		this.bookAuthor = bookAuthor;
 		this.bookPublisher = bookPublisher;
 	}
-
+	
+//	매개변수 생성자
+	public BookVo(String bookCd) {
+		super();
+		this.bookCd = bookCd;
+	}
+	
+	
+//	매개변수 생성자
+	public BookVo(String userId, String bookCd) {
+		super();
+		this.userId = userId;
+		this.bookCd = bookCd;
+	}
+	
 //	매개변수 생성자
 	public BookVo(String bookCd, String bookName, String bookAuthor, String bookPublisher) {
 		super();
@@ -164,6 +180,14 @@ package prj.com.book.vo;
 
 	public void setResrveDate(String resrveDate) {
 		this.resrveDate = resrveDate;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	//	toString

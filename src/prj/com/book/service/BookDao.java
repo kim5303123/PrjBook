@@ -25,11 +25,11 @@ public class BookDao {
 	}
 
 	// 도서 정보 등록 서브 화면 
-	public void bookInsertInput() {
+	public void bookInsertInput() { 
  
 		System.out.println("\n도서 정보 등록 화면입니다.");
 		System.out.print("등록할 도서의 번호를 입력하세요> ");
-		String bookCd = scanner.nextLine();
+		String bookCd = scanner.nextLine(); 
 		BookDaoImpl dao = new BookDaoImpl();
 		ResultSet rs = dao.checkNum(bookCd);
 		try {
@@ -143,6 +143,74 @@ public class BookDao {
 			System.out.println("bookUpdateInput() Exception!!!");
 		}
 	} // bookUpdateInput()
+	
+	// 도서 목록 대여
+		public void bookBorrowInput() {
+			System.out.println("도서 대여 화면입니다."); 
+			System.out.print("회원님의 아이디를 입력해주세요> ");
+			String userId = scanner.nextLine();
+			ArrayList<BookVo> list = new ArrayList<>();
+			BookDaoImpl dao = new BookDaoImpl();
+			ResultSet rs = dao.checkId(userId);
+			list = dao.selectBookAll(list);
+			dao.display(list);
+			System.out.print("\n도서 목록을 참고하시거나 빌리고 싶으신 도서를 검색해주세요." 
+					+ "\n이미 도서번호를 알고 계신다면 엔터를 입력해주세요."
+					+ "\n>");
+			BookDao input = new BookDao(scanner);
+			System.out.print("도서 번호를 입력해주세요> ");
+			String bookCd = scanner.nextLine();
+			ResultSet rs1 = dao.checkNum(bookCd);
+			try {
+				if(rs1.next() != true) { // 해당 번호가 없으면
+					System.out.println(bookCd + "번 회원은 등록되어 있지 않습니다.");
+				} else { //	해당 번호가 있으면 
+					BookVo dto = new BookVo(userId, bookCd);
+					
+					
+					int succ = dao.borrowBook(dto);
+					if(succ > 0) {
+						System.out.println(bookCd + "번 도서를 대여하였습니다!");
+					} else {
+						System.out.println(bookCd + "번 도서는 이미 다른 사람이 대여하였습니다.");
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("bookDeleteInput() Exception!!!");
+			}
+			
+		}
+		
+		public void bookReturnInput() {
+			System.out.println("도서 반납 화면입니다."); 
+			System.out.print("회원님의 아이디를 입력해주세요> ");
+			String userId = scanner.nextLine();
+			BookDaoImpl dao = new BookDaoImpl();
+			ResultSet rs2 = dao.checkId(userId);
+			System.out.print("\n반납하실 도서의 번호를 입력해주세요.>");
+			BookDao input = new BookDao(scanner);
+			String bookCd = scanner.nextLine();
+			ResultSet rs3 = dao.checkNum(bookCd);
+			try {
+				if(rs2.next() != true) { // 해당 번호가 없으면
+					System.out.println(userId + "번 회원은 등록되어 있지 않습니다.");
+				} else { //	해당 번호가 있으면 
+					BookVo dto = new BookVo(userId, bookCd);
+					int succ = dao.returnBook(dto);
+					if(succ > 0) {
+						System.out.println(bookCd + "번 도서를 반납하였습니다!");
+					} else {
+						System.out.println(bookCd + "번 도서는 대여하신 도서가 아닙니다.");
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("bookDeleteInput() Exception!!!");
+			}
+			
+			
+		}
 
 	// 도서 주문 신청
 //	public void bookOrderInput() {
