@@ -67,10 +67,8 @@ package prj.com.book.vo;
 //	public void setCost(int cost) {
 //		this.cost = cost;
 //	}
-	
-	
-	
-	public class BookVo {
+
+public class BookVo {
 //	도서번호
 	String bookCd;;
 //	도서이름
@@ -80,13 +78,25 @@ package prj.com.book.vo;
 //	출판사
 	String bookPublisher;
 //	도서대여 
-	String borrowDate; 
+	String borrowDate;
 //	도서반납
-	String returnDate; 
-//	도서예약 
+	String returnDate;
+//  도서예약한날짜
 	String resrveDate;
-//	유저 아이디 
+//  도서예약마감날짜
+	String reserveDateBorrow;
+//  유저 ID
 	String userId;
+//  패스워드
+	String pw;
+//  이름
+	String name;
+//  주소
+	String address;
+//  전화번호
+	String phone;
+//  이메일
+	String email;
 
 //	기본생성자
 	public BookVo() {
@@ -99,21 +109,20 @@ package prj.com.book.vo;
 		this.bookAuthor = bookAuthor;
 		this.bookPublisher = bookPublisher;
 	}
-	
+
 //	매개변수 생성자
 	public BookVo(String bookCd) {
 		super();
 		this.bookCd = bookCd;
 	}
-	
-	
+
 //	매개변수 생성자
 	public BookVo(String userId, String bookCd) {
 		super();
 		this.userId = userId;
 		this.bookCd = bookCd;
 	}
-	
+
 //	매개변수 생성자
 	public BookVo(String bookCd, String bookName, String bookAuthor, String bookPublisher) {
 		super();
@@ -123,8 +132,27 @@ package prj.com.book.vo;
 		this.bookPublisher = bookPublisher;
 	}
 
-	
-	
+//  예약 생성자
+	public BookVo(String userId, String bookCd, String bookName, String resrveDate, String reserveDateBorrow) {
+		super();
+		this.userId = userId;
+		this.bookCd = bookCd;
+		this.bookName = bookName;
+		this.resrveDate = resrveDate;
+		this.reserveDateBorrow = reserveDateBorrow;
+	}
+
+//  회원 생성자
+	public BookVo(String userId, String pw, String name, String address, String phone, String email) {
+		super();
+		this.userId = userId;
+		this.pw = pw;
+		this.name = name;
+		this.address = address;
+		this.phone = phone;
+		this.email = email;
+	}
+
 //	게터 / 세터
 	public String getBookCd() {
 		return bookCd;
@@ -190,12 +218,63 @@ package prj.com.book.vo;
 		this.userId = userId;
 	}
 
-	//	toString
+	public String getReserveDateBorrow() {
+		return reserveDateBorrow;
+	}
+
+	public void setReserveDateBorrow(String reserveDateBorrow) {
+		this.reserveDateBorrow = reserveDateBorrow;
+	}	
+
+	public String getPw() {
+		return pw;
+	}
+
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	// toString
 	@Override
 	public String toString() {
 		return "BookVo [bookCd=" + bookCd + ", bookName=" + bookName + ", bookAuthor=" + bookAuthor + ", bookPublisher="
 				+ bookPublisher + ", borrowDate=" + borrowDate + ", returnDate=" + returnDate + ", resrveDate="
-				+ resrveDate + "]";
+				+ resrveDate + ", reserveDateBorrow=" + reserveDateBorrow + ", userId=" + userId + ", pw=" + pw
+				+ ", name=" + name + ", address=" + address + ", phone=" + phone + ", email=" + email + "]";
 	}
-	
+
+
+
 }

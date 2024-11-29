@@ -10,17 +10,17 @@ import prj.com.book.service.BookDaoImpl;
 
 /**
  * @Author : TeamPrjBook
- * @Date   : 2024. 11. 27.
+ * @Date : 2024. 11. 27.
  */
 public class BookMainApp {
 
 	/**
 	 * @Author : TeamPrjBook
-	 * @Date   : 2024. 11. 27.
+	 * @Date : 2024. 11. 27.
 	 * @Method : main
 	 * @return : void
 	 */
-	 
+
 	public static void menuPrint() {
 		System.out.println("\n=====도서 관리====");
 		System.out.println("도서 정보 등록 : I");
@@ -30,15 +30,18 @@ public class BookMainApp {
 		System.out.println("도서 정보 수정 : U");
 		System.out.println("도서 목록 대여 : B");
 		System.out.println("도서 목록 반납 : R");
-		System.out.println("도서 목록 예약 : BR");
+		System.out.println("도서 주문 예약 : O");
+		System.out.println("도서 목록 예약확인 : BR");
 		System.out.println("도서 관리 종료 : E");
 		System.out.println("==================\n");
 	}
-	
+
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 				
 		while(true) {
+//			BookDao start = new BookDao(scanner);               
+//          start.membership();
 			menuPrint();
 			System.out.print("메뉴를 입력하세요> ");
 			String menu = scanner.nextLine();
@@ -58,6 +61,11 @@ public class BookMainApp {
 				input.bookBorrowInput();
 			} else if (menu.equalsIgnoreCase("r")) {
 				input.bookReturnInput();
+			}else if (menu.equalsIgnoreCase("o")) {                
+                input.bookReservationInput();
+			}else if (menu.equalsIgnoreCase("BR")) {
+                input.bookSearchAllInput();
+                input.bookReservation();
 			} else if(menu.equalsIgnoreCase("e")) {
 				System.out.print("정말 종료하시겠습니까(Y/N)> ");
 				String isExit = scanner.nextLine();

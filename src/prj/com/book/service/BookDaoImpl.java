@@ -18,6 +18,27 @@ private Connection conn = Connections.getConn();
 private PreparedStatement ps;
 private ResultSet rs;
 
+//회원 정보 등록
+public int membership(BookVo dto) {
+	int succ = 0;
+	String sql = "INSERT INTO user VALUES(?, ?, ?, ?)";
+	
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, dto.getUserId());
+		ps.setString(2, dto.getPw());
+		ps.setString(3, dto.getName());
+		ps.setString(4, dto.getAddress());
+		ps.setString(3, dto.getPhone());
+		ps.setString(4, dto.getEmail());
+		succ = ps.executeUpdate();
+	} catch (Exception e) {
+		e.printStackTrace();
+		System.out.println("membership() Exception!!!");
+	}
+	return succ;
+} // membership()
+
 // 유저 아이디 조회 
 public ResultSet checkId(String userId) {
 	String sql = "SELECT * FROM user WHERE id = ?";
@@ -31,6 +52,20 @@ public ResultSet checkId(String userId) {
 	}
 	return rs;
 }
+
+//도서 회원번호 조회
+public ResultSet checkRsNum(String id) {
+  String sql = "SELECT * FROM book_reservation WHERE id = ?";
+  try {
+      ps = conn.prepareStatement(sql);
+      ps.setString(1, id);        
+      rs = ps.executeQuery();
+  } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("checkRsNum() Exception!!!");
+  }
+  return rs;
+} // checkRsNum()
 
 
 // 도서 번호 조회
@@ -195,25 +230,45 @@ public int returnBook(BookVo dto) {
 }
 
 
-// 도서 주문 메서드
-//public void orderBook(ResultSet rs, int cnt) {
-//	try {
-//		String title = rs.getString("book_name");
-//		int cost = rs.getInt("cost");
-//		int price = cnt * cost;
-//		
-//		DecimalFormat df = new DecimalFormat("￦#,##0");
-//		String msg = "\n주문하신 도서 명은 " + title + "이고, ";
-//		msg += "단가는 " + df.format(cost) + "원이며, ";
-//		msg += "주문 수량은 " + cnt + "권 입니다.";
-//		msg += "\n총 주문 금액은 " + df.format(price) + "원입니다.";
-//		
-//		System.out.println(msg);
-//	} catch (Exception e) {
-//		e.printStackTrace();
-//		System.out.println("orderBook() Exception!!!");
-//	}
-//} // orderBook()
+//도서 대여예약확인 메서드
+public void orderBook(ResultSet rs, String reservationCnt, String bookCd) {
+ try {
+     String title = rs.getString("book_name");     
+     String reserveDateBorrow = rs.getString("reserve_date_borrow");
+     String id = rs.getString("id");
+     
+     
+     String msg = "\n예약하신 도서 명은 " + title + "이고, ";//        
+     msg = "\n예약하신 회원 명은 " + id + "이고, ";
+     msg += "예약 수량은 " + reservationCnt + "권 입니다.";
+     msg += "대여 하실 날짜는" + reserveDateBorrow + "일 까지입니다.";
+     
+//   System.out.println(msg);
+ } catch (Exception e) {
+     e.printStackTrace();
+     System.out.println("orderBook() Exception!!!");
+ }
+} // orderBook()
+
+public int reserveBorrow(BookVo dto) {
+    int succ = 0;
+    String sql = "INSERT INTO book_reservation VALUES(?,?,?,?,?) ";   
+    
+    try {
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, dto.getUserId());
+        ps.setString(2, dto.getBookCd());
+        ps.setString(3, dto.getBookName());
+        ps.setString(4, dto.getResrveDate());
+        ps.setString(5, dto.getReserveDateBorrow());        
+        succ = ps.executeUpdate();
+    } catch (Exception e) {
+        e.printStackTrace();
+        System.out.println("reserveBorrow() Exception!!!");
+    }
+    return succ;
+}
+
 
 // DB Close
 public void dbClose() {

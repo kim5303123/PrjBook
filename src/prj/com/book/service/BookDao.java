@@ -4,6 +4,8 @@
 package prj.com.book.service;
 
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -24,6 +26,45 @@ public class BookDao {
 		this.scanner = scanner;
 	}
 
+public void membership() {
+        
+        System.out.println("\n회원 정보 등록 화면입니다.");
+        System.out.print("등록할 회원번호를 입력하세요> ");
+        String id = scanner.nextLine();
+        BookDaoImpl dao = new BookDaoImpl();
+        ResultSet rs = dao.checkRsNum(id);
+        try {
+            if (rs.next() == true) { // 검색 결과가 있다.
+                System.out.println(id + "는 이미 등록되어 있습니다!");
+                System.out.println("다른 번호를 입력해주세요!");
+            } else { // 검색 결과가 없다 : 사용 가능 → 추가 정보 입력받는다.
+                System.out.print("비밀번호를 입력하세요> ");
+                String pw = scanner.nextLine();
+                System.out.print("이름을 입력하세요> ");
+                String name = scanner.nextLine();
+                System.out.print("주소를 입력하세요> ");
+                String address = scanner.nextLine();
+                System.out.print("핸드폰번호를 입력하세요> ");
+                String phone = scanner.nextLine();
+                System.out.print("이메일을 입력하세요> ");
+                String email = scanner.nextLine();
+                
+                
+                BookVo dto = new BookVo(id, pw, name, address, phone, email);
+                int succ = dao.insertBook(dto);
+                if (succ > 0) {
+                    System.out.println(id + "회원 정보가 등록되었습니다.");
+                } else {
+                    System.out.println(id + "회원 정보가 등록 실패하였습니다.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("bookInsertInput() Exception!!!");
+        }
+        
+    }
+	
 	// 도서 정보 등록 서브 화면 
 	public void bookInsertInput() { 
  
@@ -181,7 +222,7 @@ public class BookDao {
 			}
 			
 		}
-		
+//		도서 반납 화면
 		public void bookReturnInput() {
 			System.out.println("도서 반납 화면입니다."); 
 			System.out.print("회원님의 아이디를 입력해주세요> ");
@@ -209,39 +250,86 @@ public class BookDao {
 				System.out.println("bookDeleteInput() Exception!!!");
 			}
 			
-			
 		}
+		// 도서 대여 예약확인
+	    public void bookReservation() {
+	        System.out.println("\n도서 대여예약 신청확인 화면입니다");       
+	        System.out.print("회원번호를 입력하세요> ");
+	        String id = scanner.nextLine();
+	        BookDaoImpl dao = new BookDaoImpl();
+	        ResultSet rs = dao.checkRsNum(id);
+	        try {
+	            if(rs.next() != true) { 
+	                System.out.println("입력하신 회원 " + id + "는 등록되어 있지 않습니다.");
+	            } else {
+	                System.out.print("대여예약할 도서의 번호를 입력하세요> ");     
+	                String bookCd = scanner.nextLine();
+	                System.out.print("대여예약할 도서의 수량을 입력하세요> ");
+	                String reservationCnt = scanner.nextLine();
+	                String reserveDateBorrow = rs.getString(5);
+	                
+	                dao.orderBook(rs, reservationCnt, bookCd);
+	                
+	                String title = rs.getString("book_Name");
+//	              
+	                String msg = "\n예약하신 도서 명은 " + title + "이고, ";
+	                msg = "\n예약하신 회원 명은 " + id + "이고, ";
+	                
+	                msg += "대여예약 수량은 " + reservationCnt + "권 입니다.";
+	                
+	                msg += "대여 하실 날짜는 " + reserveDateBorrow + "일 까지입니다.";
+	                
+	                
+	                System.out.println(msg);
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            System.out.println("bookOrderInput() Exception!!!");
+	        }
+	}// bookOrderInput()
+	    
+	    // 도서 대여예약 등록 
+	        public void bookReservationInput() {
+	            
+	            LocalDate now = LocalDate.now();
+	            LocalDate now2 = now.plusDays(2);
+	            
+	            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");          
+	            
+	            System.out.println("\n도서 대여예약 등록 화면입니다.");
+//	          System.out.print("등록할 도서의 번호를 입력하세요> ");
+//	          String bookCd = scanner.nextLine();
+	            System.out.print("회원번호를 입력하세요> ");
+	            String id = scanner.nextLine();
+	            BookDaoImpl dao = new BookDaoImpl();
+	            ResultSet rs = dao.checkRsNum(id);
+	            try {
+	                if (rs.next() == true) { // 검색 결과가 있다.
+	                    System.out.println(id + "회원은 이미 예약하셨습니다!");
+	                    System.out.println("다른 번호를 입력해주세요!");
+	                } else { // 검색 결과가 없다 : 사용 가능 → 추가 정보 입력받는다.
+	                    System.out.print("도서번호을 입력하세요> ");
+	                    String bookCd = scanner.nextLine();
+	                    System.out.print("도서제목을 입력하세요> ");
+	                    String bookName = scanner.nextLine();
+	                    String resrveDate = now.format(formatter);
+	                    String reserveDateBorrow = now2.format(formatter);
+	                    BookVo dto = new BookVo(id, bookCd, bookName, resrveDate, reserveDateBorrow);
+	                    int succ = dao.reserveBorrow(dto);
+	                    if (succ > 0) {
+	                        System.out.println(bookCd + "번 도서 정보가 예약되었습니다.");
+	                    } else {
+	                        System.out.println(bookCd + "번 도서 정보가 예약 실패하였습니다.");
+	                    }
+	                }
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	                System.out.println("bookInsertInput() Exception!!!");
+	            }
+	        } // bookInsertInput()
+	    
+		}// BookDao
 
-	// 도서 주문 신청
-//	public void bookOrderInput() {
-///		System.out.println("\n도서 주문 신청 화면입니다");
-//		System.out.print("주문할 도서의 번호를 입력하세요> ");
-//		int num = Integer.parseInt(scanner.nextLine());
-//		BookDaoImpl dao = new BookDaoImpl();
-//		ResultSet rs = dao.checkNum(num);
-//		try {
-//			if(rs.next() != true) { 
-//				System.out.println("입력하신 " + num + "번 도서는 등록되어 있지 않습니다.");
-//			} else {
-//				System.out.print("주문할 도서의 수량을 입력하세요> ");
-//				int cnt = Integer.parseInt(scanner.nextLine());
-//				
-//				dao.orderBook(rs, cnt);
-//				
-////				String title = rs.getString("title");
-////				int cost = rs.getInt("cost");
-////				int price = cnt * cost;
-////				
-////				DecimalFormat df = new DecimalFormat("￦#,##0");
-////				String msg = "\n주문하신 도서 명은 " + title + "이고, ";
-////				msg += "단가는 " + df.format(cost) + "원이며, ";
-////				msg += "주문 수량은 " + cnt + "권 입니다.";
-////				msg += "\n총 주문 금액은 " + df.format(price) + "원입니다.";
-////				
-////				System.out.println(msg);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			System.out.println("bookOrderInput() Exception!!!");
-//		}
-} // bookOrderInput()
+		
+
+
