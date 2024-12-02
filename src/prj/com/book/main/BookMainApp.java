@@ -3,10 +3,13 @@
  */
 package prj.com.book.main;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import prj.com.book.service.BookDao;
 import prj.com.book.service.BookDaoImpl;
+import prj.com.book.service.NewConsole;
+import prj.com.book.vo.BookVo;
 
 /**
  * @Author : TeamPrjBook
@@ -21,27 +24,12 @@ public class BookMainApp {
 	 * @return : void
 	 */
 
-	public static void menuPrint() {
-		System.out.println("\n=====도서 관리====");
-		System.out.println("도서 정보 등록 : I");
-		System.out.println("도서 목록 보기 : A");
-		System.out.println("도서 제목 검색 : S");
-		System.out.println("도서 정보 삭제 : D");
-		System.out.println("도서 정보 수정 : U");
-		System.out.println("도서 목록 대여 : B");
-		System.out.println("도서 목록 반납 : R");
-		System.out.println("도서 주문 예약 : O");
-		System.out.println("도서 목록 예약확인 : BR");
-		System.out.println("도서 관리 종료 : E");
-		System.out.println("==================\n");
-	}
-
-	public static void main(String[] args) {
+	public static void st() {
+		
 		Scanner scanner = new Scanner(System.in);
-				
+		
 		while(true) {
-//			BookDao start = new BookDao(scanner);               
-//          start.membership();
+//			메인메뉴 호출
 			menuPrint();
 			System.out.print("메뉴를 입력하세요> ");
 			String menu = scanner.nextLine();
@@ -87,6 +75,55 @@ public class BookMainApp {
 				continue;
 			} // if else
 		} // while()
+	}
+
+//	로그인
+	public static void sten() throws ClassNotFoundException, SQLException {
+		
+		
+		NewConsole console = new NewConsole();
+		
+		EXIT:
+		while(true) {
+			int menu = console.inputNoticeMenu(); // 입력창 
+			switch (menu) {
+			case 1: //회원가입				
+				console.insertMenu();
+				break;
+			case 2: // 로그인
+				console.inputLoginMenu();
+				st();
+				break;
+			case 3: // 종료
+				System.out.println("종료되었습니다. BYE ");
+				break EXIT;
+			default :
+				System.out.println("<< 메뉴는 1~3사이 숫자만 입력 가능합니다.");
+				break;
+			}
+		}
+	}
+	
+	
+	public static void menuPrint() {
+		System.out.println("⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ 도서 관리 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
+		System.out.println("도서 정보 등록 : I");
+		System.out.println("도서 목록 보기 : A");
+		System.out.println("도서 제목 검색 : S");
+		System.out.println("도서 정보 삭제 : D");
+		System.out.println("도서 정보 수정 : U");
+		System.out.println("도서 목록 대여 : B");
+		System.out.println("도서 목록 반납 : R");
+		System.out.println("도서 주문 예약 : O");
+		System.out.println("도서 목록 예약확인 : BR");
+		System.out.println("도서 관리 종료 : E");
+		System.out.println("⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
+	}
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		sten();
+
+		
 	} // main()
 	
 }
