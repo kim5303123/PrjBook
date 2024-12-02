@@ -1,0 +1,85 @@
+회원은
+	회원아이디로 식별한다
+	대출 할 수 있다
+	대출된 도서는 14일 이내 반납해야 한다
+
+한명의 회원은	
+	예약 후 48시간 안에 대여를 해야한다.
+	여러권의 반납요청을 할수있다.
+
+도서는
+	도서번호로 식별한다
+
+대출도서, 도서반납, 예약조회는 
+	회원 아이디로 식별한다 
+
+
+
+
+[사용자]
+1. 사용자가 책을 대여할때
+실행 -> 회원인지 체크 -> 회원이 아니면 회원가입으로 이동 그렇지 않으면 로그인으로 이동 -> 도서대여메뉴를 선택 -> 검색(또는 도서목록 확인) -> 책 정보 확인 후 도서번호 입력하고 대여  
+
+2. 사용자가 책을 반납할때
+실행 -> 회원인지 체크 -> 회원이 아니면 회원가입으로 이동 그렇지 않으면 로그인으로 이동 -> 도서반납메뉴를 선택 -> 도서번호를 입력 후 반납 
+
+3. 사용자가 책을 검색할때  
+실행 -> 회원인지 체크 -> 회원이 아니면 회원가입으로 이동 그렇지 않으면 로그인으로 이동 -> 도서검색메뉴를 선택 -> 검색(도서번호, 도서명, 작가) -> 목록확인
+
+4. 사용자가 도서목록을 확인할 때 
+실행 -> 회원인지 체크 -> 회원이 아니면 회원가입으로 이동 그렇지 않으면 로그인으로 이동 -> 도서목록메뉴를 선택 -> 목록확인(검색을 안했으니 전체목록)
+
+5. 사용자가 책을 예약할때 
+실행 -> 회원인지 체크 -> 회원이 아니면 회원가입으로 이동 그렇지 않으면 로그인으로 이동 -> 도서대여를 선택 -> 도서예약을 선택 -> 목록 확인 후 -> 예약도서 선택  -> 예약완료 보여주기
+
+6. 사용자가 종료할 때
+실행 -> 종료 메뉴 선택 -> 종료
+
+
+[테이블 목록] 
+사용자
+도서 정보
+도서 대여
+도서 반납
+도서 예약
+관리자 
+
+사용자(USER)		
+- 아이디 	varchar(20)	id				PK	NOT NULL
+- 비밀번호 	varchar(20)	pw					NOT NULL
+- 이름 		varchar(20)	name				NOT NULL
+- 주소 		varchar(30)	address				NOT NULL
+- 전화번호	 varchar(20) phone				NOT NULL
+- 이메일	varchar(30) email				NOT NULL
+
+ 
+ 도서정보(BOOK)
+- 도서번호	varchar(20)	book_cd			PK	NOT NULL
+- 도서명	varchar(20)	book_name			NOT NULL
+- 작가		varchar(20)	book_author			NOT NULL
+- 출판사	varchar(20)	book_publisher	NOT NULL
+
+
+도서대여(BOOK_BORROW)
+- 고유 식별키 integer 	borrow_log		PK  NOT NULL 
+- 아이디	varchar(20)	id				FK	NOT NULL
+- 도서명	varchar(20) book_name		FK	NOT NULL
+- 대여날짜	datetime	borrow_date			NOT NULL
+- 반납날짜	datetime	return_date			NOT NULL
+
+
+도서반납(BOOK_RETURN)
+- 고유 식별키 integer 	return_log		PK  NOT NULL 
+- 아이디	varchar(20)	id				FK	NOT NULL
+- 도서명	varchar(20)	book_name		FK	NOT NULL
+- 대여날짜	datetime	borrow_date			NOT NULL
+- 반납날짜	datetime	return_date			NOT NULL
+
+
+도서예약(BOOK_RESERVATION)
+- 아이디	varchar(20)	id			PK	FK	NOT NULL
+- 도서명	varchar(20)	book_name		FK	NOT NULL
+- 도서번호	varchar(20)	book_cd			FK	NOT NULL
+- 예약날짜	datetime	book_reserve		NOT NULL
+- 대여예약	TIMESTAMP	reserve_date_borrow	NOT NULL
+
